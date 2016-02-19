@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="in.ernet.iitg.app">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".show_Data"
+            android:label="@string/title_activity_show__data"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".update_Data"
+            android:label="@string/title_activity_update__data"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Testing_Data"
+            android:label="@string/title_activity_testing__data"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Show_accelrometer"
+            android:label="@string/title_activity_show_accelrometer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Show_magnetometer"
+            android:label="@string/title_activity_show_magnetometer"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
+
+</manifest>

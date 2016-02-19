@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">APP</string>
+    <string name="action_settings">Settings</string>
+    <string name="show_Data">Show Data</string>
+    <string name="update_data">Update Data</string>
+    <string name="testing_data">Testing Data</string>
+    <string name="title_activity_show__data">show_Data</string>
+    <string name="Notes">Waiting for internet page</string>
+    <string name="title_activity_update__data">update_Data</string>
+    <string name="update_stop">Stop</string>
+    <string name="update_Start">Start</string>
+    <string name="title_activity_testing__data">Testing_Data</string>
+    <string name="testing_data_info">Will be used for testing</string>
+    <string name="accelration_Data">X: Y: Z:</string>
+    <string name="accelrometer_button">Accelrometer</string>
+    <string name="title_activity_show_accelrometer">Show_accelrometer</string>
+    <string name="Accelrometer_Data">X: Y: Z:</string>
+    <string name="Magnetometer_Data">Magnetometer</string>
+    <string name="title_activity_show_magnetometer">Show_magnetometer</string>
+    <string name="Magnetometer_value">X: Y: Z:</string>
+    <string name="INput_paramters">5</string>
+</resources>

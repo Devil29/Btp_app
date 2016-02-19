@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="in.ernet.iitg.app.MainActivity"
+    tools:showIn="@layout/activity_main"
+    android:background="@drawable/iitg">
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_Data"
+        android:id="@+id/showData"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:width="300dp"
+        android:height="60dp"
+        android:textSize="20dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginBottom="20dp"
+        android:background="#70ef50"
+        android:onClick="onshowData"
+        android:textColor="#b22f2f" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update_data"
+        android:id="@+id/updateData"
+        android:width="300dp"
+        android:height="60dp"
+        android:textSize="20dp"
+        android:layout_below="@+id/showData"
+        android:layout_marginBottom="20dp"
+        android:layout_alignLeft="@+id/testingData"
+        android:layout_alignStart="@+id/testingData"
+        android:background="#70ef50"
+        android:onClick="onupdateData"
+        android:textColor="#b22f2f" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/testing_data"
+        android:id="@+id/testingData"
+        android:width="300dp"
+        android:height="60dp"
+        android:textSize="20dp"
+        android:layout_below="@+id/updateData"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="#70ef50"
+        android:onClick="ontestingData"
+        android:textColor="#b22f2f" />
+</RelativeLayout>
