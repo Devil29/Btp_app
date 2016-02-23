@@ -26,18 +26,20 @@ public class Show_magnetometer extends Activity implements SensorEventListener {
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_show_accelrometer);
+        setContentView(R.layout.content_show_magnetometer);
         sm=(SensorManager)getSystemService(SENSOR_SERVICE);
-        magnetometer=sm.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        magnetometer=sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         sm.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_NORMAL);
         mag= (TextView)findViewById(R.id.Magnetometer);
     }
     //final private String tag =  vishal;
     public void onSensorChanged(SensorEvent event){
-        Log.d("I am Here",TAG);
-        Log.d(String.valueOf(event.values), TAG);
+        //Log.d("I am Here",TAG);
+        Log.d(String.valueOf(event.values[0]), TAG);
         //mag.setText("values  " + event.values.length);
         //mag.setText("X: " + String.valueOf(event.values[0]) );
+        //mag.setText("X: " + String.valueOf(event.values[0]) );
+        mag.setText("X: " + event.values[0] +"\nY: " +  event.values[1] + "\nZ: " + event.values[2] );
     }
 
     public void onAccuracyChanged(Sensor sensor, int accuracy){

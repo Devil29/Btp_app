@@ -37,4 +37,8 @@ public class Testing_Data extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void onRotation(View view){
+        Intent i = new Intent(this, Show_rotation.class);
+        startActivity(i);
+    }
 }

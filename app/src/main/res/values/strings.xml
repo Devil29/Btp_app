@@ -19,4 +19,15 @@
     <string name="title_activity_show_magnetometer">Show_magnetometer</string>
     <string name="Magnetometer_value">X: Y: Z:</string>
     <string name="INput_paramters">5</string>
+    <string name="Accelrometer_title">Accelrometer</string>
+    <string name="Magnetometer_title">Magnetometer</string>
+    <string name="Rotation_vector">Roation Vector</string>
+    <string name="Rotation_title">Rotation Vector</string>
+    <string name="Rotation_values">X: Y: Z:</string>
+    <string-array name="Rate">
+        <item>Slow</item>
+        <item>Normal</item>
+        <item>Fast</item>
+        <item>Very_Fast</item>
+    </string-array>
 </resources>

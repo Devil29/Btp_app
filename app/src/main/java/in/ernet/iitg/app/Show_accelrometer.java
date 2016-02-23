@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ public class Show_accelrometer extends Activity implements SensorEventListener {
     Sensor accelerometer;
     SensorManager sm;
     TextView acceleration;
+    private static final String TAG = "vishal";
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -32,6 +34,8 @@ public class Show_accelrometer extends Activity implements SensorEventListener {
     }
 
     public void onSensorChanged(SensorEvent event){
+        //Log.d(String.valueOf(event.values[0]), TAG);
+        //acceleration.setText("X: " + String.valueOf(event.values[0]));
         acceleration.setText("X: " + event.values[0] +"\nY: " +  event.values[1] + "\nZ: " + event.values[2] );
     }
 

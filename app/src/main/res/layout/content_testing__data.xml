@@ -10,7 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="in.ernet.iitg.app.Testing_Data"
-    tools:showIn="@layout/activity_testing__data">
+    tools:showIn="@layout/activity_testing__data"
+    android:background="@drawable/iitg">
 
     <TextView
         android:layout_width="wrap_content"
@@ -28,13 +29,14 @@
         android:layout_height="wrap_content"
         android:text="@string/accelrometer_button"
         android:id="@+id/accelrometer"
-        android:layout_marginTop="53dp"
         android:layout_below="@+id/info"
         android:layout_centerHorizontal="true"
         android:background="#70ef50"
         android:width="300dp"
         android:height="60dp"
-        android:textSize="20dp"
+        android:textSize="20sp"
+        android:layout_marginTop="180dp"
+        android:layout_marginBottom="20dp"
         android:textColor="#b22f2f"
         android:onClick="onAccelrometer"/>
 
@@ -45,12 +47,26 @@
         android:id="@+id/Magnetometer"
         android:width="300dp"
         android:height="60dp"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:background="#70ef50"
         android:textColor="#b22f2f"
         android:layout_below="@+id/accelrometer"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp"
+        android:layout_marginBottom="20dp"
         android:onClick="onMagnetometer"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Rotation_vector"
+        android:id="@+id/Rotation"
+        android:layout_below="@+id/Magnetometer"
+        android:layout_centerHorizontal="true"
+        android:width="300dp"
+        android:height="60dp"
+        android:textSize="20sp"
+        android:background="#70ef50"
+        android:textColor="#b22f2f"
+        android:onClick="onRotation"/>
 
 </RelativeLayout>
