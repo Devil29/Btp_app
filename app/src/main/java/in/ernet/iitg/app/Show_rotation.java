@@ -38,19 +38,23 @@ public class Show_rotation extends Activity implements SensorEventListener {
         Spinner s= (Spinner)findViewById(R.id.rate);
         if((s.getSelectedItem().toString()).compareTo("Slow")==0){
             Log.d("SLOW", TAG);
-            sm.registerListener(this, rotate, (SensorManager.SENSOR_DELAY_NORMAL)*10000);
+            sm.unregisterListener(this);
+            sm.registerListener(this, rotate, (SensorManager.SENSOR_DELAY_NORMAL));
         }
         else if((s.getSelectedItem().toString()).compareTo("Normal")==0){
             Log.d("Normal", TAG);
-            sm.registerListener(this, rotate, (SensorManager.SENSOR_DELAY_NORMAL)*1000);
+            sm.unregisterListener(this);
+            sm.registerListener(this, rotate, (SensorManager.SENSOR_DELAY_NORMAL)*5);
         }
         else if((s.getSelectedItem().toString()).compareTo("Fast")==0){
             Log.d("Fast", TAG);
-            sm.registerListener(this, rotate, (SensorManager.SENSOR_DELAY_NORMAL)*100);
+            sm.unregisterListener(this);
+            sm.registerListener(this, rotate, (SensorManager.SENSOR_DELAY_NORMAL)*20);
         }
         else if((s.getSelectedItem().toString()).compareTo("Very_Fast")==0){
             Log.d("ITS very fast", TAG);
-            sm.registerListener(this, rotate, (SensorManager.SENSOR_DELAY_NORMAL)*10);
+            sm.unregisterListener(this);
+            sm.registerListener(this, rotate, (SensorManager.SENSOR_DELAY_NORMAL)*100);
         }
     }
 
