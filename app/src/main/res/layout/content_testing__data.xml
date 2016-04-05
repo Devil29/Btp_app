@@ -67,6 +67,21 @@
         android:textSize="20sp"
         android:background="#70ef50"
         android:textColor="#b22f2f"
+        android:layout_marginBottom="20dp"
         android:onClick="onRotation"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/All_sensor"
+        android:id="@+id/AllSensor"
+        android:layout_below="@+id/Rotation"
+        android:layout_centerHorizontal="true"
+        android:width="300dp"
+        android:height="60dp"
+        android:textSize="20sp"
+        android:background="#70ef50"
+        android:textColor="#b22f2f"
+        android:onClick="onALL"/>
 
 </RelativeLayout>

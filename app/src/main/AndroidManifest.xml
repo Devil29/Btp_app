@@ -38,7 +38,11 @@
             android:name=".Show_magnetometer"
             android:label="@string/title_activity_show_magnetometer"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Show_rotation"></activity>
+        <activity android:name=".Show_rotation" />
+        <activity
+            android:name=".Show_All"
+            android:label="@string/title_activity_show__all"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
