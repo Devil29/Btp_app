@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Show_rotation extends Activity implements SensorEventListener {
     Sensor rotate;
@@ -34,7 +35,7 @@ public class Show_rotation extends Activity implements SensorEventListener {
     public void onSensorChanged(SensorEvent event){
         //Log.d(String.valueOf(event.values[0]), TAG);
         //acceleration.setText("X: " + String.valueOf(event.values[0]));
-        rotation.setText("X: " + event.values[0] +"\nY: " +  event.values[1] + "\nZ: " + event.values[2] );
+        rotation.setText("X: " + event.values[0] + "\nY: " + event.values[1] + "\nZ: " + event.values[2]);
         Spinner s= (Spinner)findViewById(R.id.rate);
         if((s.getSelectedItem().toString()).compareTo("Slow")==0){
             Log.d("SLOW", TAG);
@@ -60,6 +61,13 @@ public class Show_rotation extends Activity implements SensorEventListener {
 
     public void onAccuracyChanged(Sensor sensor, int accuracy){
 
+    }
+
+    public void Startdata(){
+        Toast.makeText(getApplicationContext(),"Saving data Started",Toast.LENGTH_LONG).show();
+    }
+    public void Stopdata(){
+        Toast.makeText(getApplicationContext(),"Saving data Stoped",Toast.LENGTH_LONG).show();
     }
 }
 
