@@ -7,6 +7,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,9 @@ import android.widget.Toast;
 
 import java.io.Console;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
 
@@ -27,7 +31,7 @@ public class Show_rotation extends Activity implements SensorEventListener {
     SensorManager sm;
     TextView rotation;
     private static final String TAG = "DUDE";
-    private List<String> FileData= new Vector<String>();
+    private Vector<String> FileData= new Vector<String>();
     public int state=0;
 
     public void onCreate(Bundle savedInstanceState){
@@ -44,11 +48,10 @@ public class Show_rotation extends Activity implements SensorEventListener {
         //acceleration.setText("X: " + String.valueOf(event.values[0]));
         rotation.setText("X: " + event.values[0] + "\nY: " + event.values[1] + "\nZ: " + event.values[2]);
         if(state==1) {
-            FileData.add(Float.toString(event.values[0]));
+            FileData.add(Float.toString(event.values[0]) + "," + Float.toString(event.values[1]) + "," + Float.toString(event.values[2]) + "\n");
         }
         else if(state==2){
-            Log.d("Size of file data is  " + FileData.size(),TAG);
-            Toast.makeText(getApplicationContext(),"Size of file data is  " + FileData.size(),Toast.LENGTH_LONG).show();
+            Log.d("Size of file data is  " + FileData.size(), TAG);
             state=0;
             FileData= new Vector<String>();
         }
@@ -85,6 +88,34 @@ public class Show_rotation extends Activity implements SensorEventListener {
     }
     public void Stopdata(View view){
         //Toast.makeText(getApplicationContext(),"Saving data Stoped",Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),"Size of file data is  " + FileData.size(),Toast.LENGTH_LONG).show();
+        String sdCardState;
+        sdCardState= Environment.getExternalStorageState();
+        if(Environment.MEDIA_MOUNTED.equals(sdCardState)){
+            File root= Environment.getExternalStorageDirectory();
+            File dir= new File(root.getAbsolutePath()+"/IITGAPP");
+            if(!dir.exists()){
+                dir.mkdir();
+            }
+            File file= new File(dir,"rotation.txt");
+            try{
+                FileOutputStream fileOutputStream= new FileOutputStream(file);
+                for(int i=0;i<FileData.size();i++){
+                    fileOutputStream.write(FileData.get(i).getBytes());
+                }
+                fileOutputStream.close();
+            }
+            catch (FileNotFoundException e){
+                e.printStackTrace();
+            }
+            catch ( IOException e){
+                e.printStackTrace();
+            }
+
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"SDcard Not Available",Toast.LENGTH_LONG).show();
+        }
         state=2;
     }
 
