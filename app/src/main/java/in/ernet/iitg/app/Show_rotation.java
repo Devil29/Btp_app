@@ -17,11 +17,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Console;
+import java.io.File;
+import java.util.List;
+import java.util.Vector;
+
 public class Show_rotation extends Activity implements SensorEventListener {
     Sensor rotate;
     SensorManager sm;
     TextView rotation;
     private static final String TAG = "DUDE";
+    private List<String> FileData= new Vector<String>();
+    public int state=0;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -36,6 +43,15 @@ public class Show_rotation extends Activity implements SensorEventListener {
         //Log.d(String.valueOf(event.values[0]), TAG);
         //acceleration.setText("X: " + String.valueOf(event.values[0]));
         rotation.setText("X: " + event.values[0] + "\nY: " + event.values[1] + "\nZ: " + event.values[2]);
+        if(state==1) {
+            FileData.add(Float.toString(event.values[0]));
+        }
+        else if(state==2){
+            Log.d("Size of file data is  " + FileData.size(),TAG);
+            Toast.makeText(getApplicationContext(),"Size of file data is  " + FileData.size(),Toast.LENGTH_LONG).show();
+            state=0;
+            FileData= new Vector<String>();
+        }
         Spinner s= (Spinner)findViewById(R.id.rate);
         if((s.getSelectedItem().toString()).compareTo("Slow")==0){
             Log.d("SLOW", TAG);
@@ -63,11 +79,14 @@ public class Show_rotation extends Activity implements SensorEventListener {
 
     }
 
-    public void Startdata(){
+    public void Startdata(View view){
         Toast.makeText(getApplicationContext(),"Saving data Started",Toast.LENGTH_LONG).show();
+        state=1;
     }
-    public void Stopdata(){
-        Toast.makeText(getApplicationContext(),"Saving data Stoped",Toast.LENGTH_LONG).show();
+    public void Stopdata(View view){
+        //Toast.makeText(getApplicationContext(),"Saving data Stoped",Toast.LENGTH_LONG).show();
+        state=2;
     }
+
 }
 
