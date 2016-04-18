@@ -25,6 +25,8 @@
     <string name="Rotation_title">Rotation Vector</string>
     <string name="Rotation_values">X: Y: Z:</string>
     <string name="All_sensor">AllSensor</string>
+    <string name="Start_button">Start</string>
+    <string name="Stop_Button">Stop</string>
     <string-array name="Rate">
         <item>Slow</item>
         <item>Normal</item>
