@@ -32,7 +32,7 @@ public class Show_rotation extends Activity implements SensorEventListener {
     TextView rotation;
     private static final String TAG = "DUDE";
     private Vector<String> FileData= new Vector<String>();
-    public int state=0;
+    private int state=0;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -88,7 +88,10 @@ public class Show_rotation extends Activity implements SensorEventListener {
     }
     public void Stopdata(View view){
         //Toast.makeText(getApplicationContext(),"Saving data Stoped",Toast.LENGTH_LONG).show();
-        Toast.makeText(getApplicationContext(),"Size of file data is  " + FileData.size(),Toast.LENGTH_LONG).show();
+        if(FileData.size()==0){
+            Toast.makeText(getApplicationContext(),"No Data to write ",Toast.LENGTH_LONG).show();
+            return;
+        }
         String sdCardState;
         sdCardState= Environment.getExternalStorageState();
         if(Environment.MEDIA_MOUNTED.equals(sdCardState)){
@@ -111,13 +114,12 @@ public class Show_rotation extends Activity implements SensorEventListener {
             catch ( IOException e){
                 e.printStackTrace();
             }
-
+            Toast.makeText(getApplicationContext(),"Size of file data is  " + FileData.size(),Toast.LENGTH_LONG).show();
         }
         else{
             Toast.makeText(getApplicationContext(),"SDcard Not Available",Toast.LENGTH_LONG).show();
         }
         state=2;
     }
-
 }
 

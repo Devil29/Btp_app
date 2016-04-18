@@ -38,10 +38,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/rate_magneto"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:entries="@array/Rate"
-        android:layout_marginBottom="104dp" />
+        android:layout_below="@+id/Magnetometer"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Start_button"
+        android:id="@+id/Start"
+        android:onClick="Startdata"
+        android:layout_marginLeft="50dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Stop_Button"
+        android:id="@+id/Stop"
+        android:onClick="Stopdata"
+        android:layout_alignTop="@+id/Start"
+        android:layout_alignRight="@+id/Magnetometer"
+        android:layout_alignEnd="@+id/Magnetometer" />
 
 </RelativeLayout>

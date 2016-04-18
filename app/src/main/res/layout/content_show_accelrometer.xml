@@ -39,11 +39,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/rate_accelration"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:entries="@array/Rate"
-        android:layout_marginBottom="104dp" />
+        android:layout_above="@+id/Start"
+        android:layout_alignLeft="@+id/accelrometer"
+        android:layout_alignStart="@+id/accelrometer" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Start_button"
+        android:id="@+id/Start"
+        android:onClick="Startdata"
+        android:layout_alignTop="@+id/Stop"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Stop_Button"
+        android:id="@+id/Stop"
+        android:onClick="Stopdata"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/accelrometer"
+        android:layout_alignEnd="@+id/accelrometer" />
 
 
 </RelativeLayout>
