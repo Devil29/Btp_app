@@ -35,14 +35,14 @@
         android:background="#70ef50"
         android:textColor="#b22f2f"
         android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button" />
+        android:layout_alignLeft="@+id/update_Start"
+        android:layout_alignStart="@+id/update_Start" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/update_Start"
-        android:id="@+id/button"
+        android:id="@+id/update_Start"
         android:width="300dp"
         android:height="60dp"
         android:textSize="20dp"
