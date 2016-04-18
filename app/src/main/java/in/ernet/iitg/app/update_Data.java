@@ -12,25 +12,35 @@ import android.util.Log;
 import android.view.View;
 import android.app.Activity;
 import android.widget.Button;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class update_Data extends Activity {
 
     private ProgressDialog pDialog;
     JSONObject jsonObject = new JSONObject();
-    private static String url_Send_Data = "http://10.9.3.30/BTP/Send_Data.php";
+    HashMap<String,String> Send_Data= new HashMap<String, String>();
+    private static String url_Send_Data = "http://172.16.114.76/BTP/Send_Data.php";
     private static final String TAG_SUCCESS = "success";
 
     @Override
@@ -38,19 +48,17 @@ public class update_Data extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update__data);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // Create button
-        Button btnCreateProduct = (Button) findViewById(R.id.update_Start);
 
-        // button click event
+        Button btnCreateProduct = (Button) findViewById(R.id.update_Start);
         btnCreateProduct.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                // creating new product in background thread
                 new SendData().execute();
             }
         });
     }
+
     class SendData extends AsyncTask<String, String, String> {
 
         @Override
@@ -62,6 +70,10 @@ public class update_Data extends Activity {
             pDialog.setCancelable(true);
             pDialog.show();
         }
+        protected void onPostExecute(String file_url) {
+            pDialog.dismiss();
+        }
+
 
         protected String doInBackground(String... args) {
             try{
@@ -70,6 +82,10 @@ public class update_Data extends Activity {
             catch (JSONException e){
                 e.printStackTrace();
             }
+            Send_Data.put("DATA","Vishal");
+            performPostCall(url_Send_Data, Send_Data);
+            
+            /*
             HttpURLConnection urlConnection = null;
             try{
                 URL url = new URL(url_Send_Data);
@@ -79,58 +95,71 @@ public class update_Data extends Activity {
                 urlConnection.setRequestProperty("Content-Type", "application/json");
                 urlConnection.setRequestProperty("Accept", "application/json");
                 Writer writer = new BufferedWriter(new OutputStreamWriter(urlConnection.getOutputStream(), "UTF-8"));
-                writer.write(String.valueOf(jsonObject));
+                writer.write("HELLO");
                 writer.close();
+                Log.d("sending wifi", TAG_SUCCESS);
             }
             catch (IOException e){
+                Log.d("sending error", TAG_SUCCESS);
                 e.printStackTrace();
             }
-            /*
-            String name = inputName.getText().toString();
-            String price = inputPrice.getText().toString();
-            String description = inputDesc.getText().toString();
-
-            // Building Parameters
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("name", name));
-            params.add(new BasicNameValuePair("price", price));
-            params.add(new BasicNameValuePair("description", description));
-
-            // getting JSON Object
-            // Note that create product url accepts POST method
-            JSONObject json = jsonParser.makeHttpRequest(url_create_product,
-                    "POST", params);
-
-            // check log cat fro response
-            Log.d("Create Response", json.toString());
-
-            // check for success tag
-            try {
-                int success = json.getInt(TAG_SUCCESS);
-
-                if (success == 1) {
-                    // successfully created product
-                    Intent i = new Intent(getApplicationContext(), AllProductsActivity.class);
-                    startActivity(i);
-
-                    // closing this screen
-                    finish();
-                } else {
-                    // failed to create product
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-*/
+            */
             return null;
         }
+        public String  performPostCall(String requestURL,HashMap<String, String> postDataParams) {
+            URL url;
+            String response = "";
+            try {
+                url = new URL(requestURL);
 
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-        protected void onPostExecute(String file_url) {
-            pDialog.dismiss();
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(15000);
+                conn.setConnectTimeout(15000);
+                conn.setRequestMethod("GET");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString(postDataParams));
+                writer.flush();
+                writer.close();
+                os.close();
+                int responseCode=conn.getResponseCode();
+
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+                    String line;
+                    BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    while ((line=br.readLine()) != null) {
+                        response+=line;
+                    }
+                }
+                else {
+                    response="";
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return response;
         }
+        private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
+            StringBuilder result = new StringBuilder();
+            boolean first = true;
+            for(Map.Entry<String, String> entry : params.entrySet()){
+                if (first)
+                    first = false;
+                else
+                    result.append("&");
 
+                result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+                result.append("=");
+                result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+            }
+
+            return result.toString();
+        }
     }
 }

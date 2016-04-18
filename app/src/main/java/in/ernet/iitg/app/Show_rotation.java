@@ -34,6 +34,7 @@ public class Show_rotation extends Activity implements SensorEventListener {
     private Vector<String> FileData= new Vector<String>();
     private int state=0;
 
+
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_rotation);
