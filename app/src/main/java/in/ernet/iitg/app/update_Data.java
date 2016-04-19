@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,11 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -39,9 +45,12 @@ public class update_Data extends Activity {
 
     private ProgressDialog pDialog;
     JSONObject jsonObject = new JSONObject();
+    String File_Data=new String();
+    String File_Name=new String();
     HashMap<String,String> Send_Data= new HashMap<String, String>();
     private static String url_Send_Data = "http://172.16.114.76/BTP/Send_Data.php";
     private static final String TAG_SUCCESS = "success";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +63,46 @@ public class update_Data extends Activity {
 
             @Override
             public void onClick(View view) {
+                File_Name="rotation.txt";
+                readFromFile();
                 new SendData().execute();
             }
         });
     }
-
+    public void readFromFile(){
+        String sdCardState;
+        sdCardState= Environment.getExternalStorageState();
+        StringBuilder text = new StringBuilder();
+        File_Data=new String();
+        if(Environment.MEDIA_MOUNTED.equals(sdCardState)){
+            File root= Environment.getExternalStorageDirectory();
+            File dir= new File(root.getAbsolutePath()+"/IITGAPP");
+            if(!dir.exists()){
+                dir.mkdir();
+            }
+            File file= new File(dir,File_Name);
+            try{
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    text.append(line);
+                    text.append('\n');
+                }
+                br.close();
+            }
+            catch (FileNotFoundException e){
+                e.printStackTrace();
+            }
+            catch ( IOException e){
+                e.printStackTrace();
+            }
+            File_Data=text.toString();
+            Toast.makeText(getApplicationContext(),"File Read ",Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"SDcard Not Available",Toast.LENGTH_LONG).show();
+        }
+    }
     class SendData extends AsyncTask<String, String, String> {
 
         @Override
@@ -82,28 +126,8 @@ public class update_Data extends Activity {
             catch (JSONException e){
                 e.printStackTrace();
             }
-            Send_Data.put("DATA","Vishal");
+            Send_Data.put("DATA",File_Data);
             performPostCall(url_Send_Data, Send_Data);
-            
-            /*
-            HttpURLConnection urlConnection = null;
-            try{
-                URL url = new URL(url_Send_Data);
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setDoOutput(true);
-                urlConnection.setRequestMethod("POST");
-                urlConnection.setRequestProperty("Content-Type", "application/json");
-                urlConnection.setRequestProperty("Accept", "application/json");
-                Writer writer = new BufferedWriter(new OutputStreamWriter(urlConnection.getOutputStream(), "UTF-8"));
-                writer.write("HELLO");
-                writer.close();
-                Log.d("sending wifi", TAG_SUCCESS);
-            }
-            catch (IOException e){
-                Log.d("sending error", TAG_SUCCESS);
-                e.printStackTrace();
-            }
-            */
             return null;
         }
         public String  performPostCall(String requestURL,HashMap<String, String> postDataParams) {
