@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.text.format.Time;
 
 import java.io.Console;
 import java.io.File;
@@ -34,7 +35,6 @@ public class Show_rotation extends Activity implements SensorEventListener {
     private Vector<String> FileData= new Vector<String>();
     private int state=0;
 
-
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_rotation);
@@ -47,9 +47,11 @@ public class Show_rotation extends Activity implements SensorEventListener {
     public void onSensorChanged(SensorEvent event){
         //Log.d(String.valueOf(event.values[0]), TAG);
         //acceleration.setText("X: " + String.valueOf(event.values[0]));
+        Time now = new Time();
+        now.setToNow();
         rotation.setText("X: " + event.values[0] + "\nY: " + event.values[1] + "\nZ: " + event.values[2]);
         if(state==1) {
-            FileData.add(Float.toString(event.values[0]) + "," + Float.toString(event.values[1]) + "," + Float.toString(event.values[2]) + "\n");
+            FileData.add(Float.toString(event.values[0]) + "," + Float.toString(event.values[1]) + "," + Float.toString(event.values[2]) + "," + now.format("%Y_%m_%d_%H_%M_%S")  + "\n" );
         }
         else if(state==2){
             Log.d("Size of file data is  " + FileData.size(), TAG);
@@ -89,6 +91,8 @@ public class Show_rotation extends Activity implements SensorEventListener {
     }
     public void Stopdata(View view){
         //Toast.makeText(getApplicationContext(),"Saving data Stoped",Toast.LENGTH_LONG).show();
+        Time now = new Time();
+        now.setToNow();
         if(FileData.size()==0){
             Toast.makeText(getApplicationContext(),"No Data to write ",Toast.LENGTH_LONG).show();
             return;
@@ -101,7 +105,7 @@ public class Show_rotation extends Activity implements SensorEventListener {
             if(!dir.exists()){
                 dir.mkdir();
             }
-            File file= new File(dir,"rotation.txt");
+            File file= new File(dir,"rotation" + now.format("%Y_%m_%d_%H_%M_%S") +  ".txt");
             try{
                 FileOutputStream fileOutputStream= new FileOutputStream(file);
                 for(int i=0;i<FileData.size();i++){
