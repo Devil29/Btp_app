@@ -107,7 +107,7 @@ public class Show_rotation extends Activity implements SensorEventListener {
                 dir.mkdir();
             }
             currtime=now.format("%Y_%m_%d_%H_%M_%S");
-            File file= new File(dir,"rotation" + now.format("%Y_%m_%d_%H_%M_%S") +  ".txt");
+            File file= new File(dir,"rotation" + currtime +  ".txt");
             try{
                 FileOutputStream fileOutputStream= new FileOutputStream(file);
                 for(int i=0;i<FileData.size();i++){
@@ -121,7 +121,6 @@ public class Show_rotation extends Activity implements SensorEventListener {
             catch ( IOException e){
                 e.printStackTrace();
             }
-
             File file1=new File(dir, "Update.txt");
             try {
                 FileOutputStream fileOutputStream= new FileOutputStream(file1,true);

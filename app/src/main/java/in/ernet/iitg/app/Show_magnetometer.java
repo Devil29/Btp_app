@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.widget.Spinner;
@@ -49,14 +50,15 @@ public class Show_magnetometer extends Activity implements SensorEventListener {
         //mag.setText("values  " + event.values.length);
         //mag.setText("X: " + String.valueOf(event.values[0]) );
         //mag.setText("X: " + String.valueOf(event.values[0]) );
+        Time now = new Time();
+        now.setToNow();
         mag.setText("X: " + event.values[0] +"\nY: " +  event.values[1] + "\nZ: " + event.values[2] );
         if(state==1) {
-            FileData.add(Float.toString(event.values[0]) + "," + Float.toString(event.values[1]) + "," + Float.toString(event.values[2]) + "\n");
+            FileData.add(Float.toString(event.values[0]) + "," + Float.toString(event.values[1]) + "," + Float.toString(event.values[2]) + "," + now.format("%Y_%m_%d_%H_%M_%S") + "\n");
         }
         else if(state==2){
             Log.d("Size of file data is  " + FileData.size(), TAG);
             state=0;
-            FileData= new Vector<String>();
         }
         Spinner s = (Spinner)findViewById(R.id.rate_magneto);
         if((s.getSelectedItem().toString()).compareTo("Slow")==0){
@@ -91,11 +93,14 @@ public class Show_magnetometer extends Activity implements SensorEventListener {
     }
     public void Stopdata(View view){
         //Toast.makeText(getApplicationContext(),"Saving data Stoped",Toast.LENGTH_LONG).show();
+        Time now = new Time();
+        now.setToNow();
         if(FileData.size()==0){
             Toast.makeText(getApplicationContext(),"No Data to write ",Toast.LENGTH_LONG).show();
             return;
         }
         String sdCardState;
+        String currtime;
         sdCardState= Environment.getExternalStorageState();
         if(Environment.MEDIA_MOUNTED.equals(sdCardState)){
             File root= Environment.getExternalStorageDirectory();
@@ -103,7 +108,8 @@ public class Show_magnetometer extends Activity implements SensorEventListener {
             if(!dir.exists()){
                 dir.mkdir();
             }
-            File file= new File(dir,"magnetometer.txt");
+            currtime=now.format("%Y_%m_%d_%H_%M_%S");
+            File file= new File(dir,"magnetometer" + currtime +  ".txt");
             try{
                 FileOutputStream fileOutputStream= new FileOutputStream(file);
                 for(int i=0;i<FileData.size();i++){
@@ -117,11 +123,24 @@ public class Show_magnetometer extends Activity implements SensorEventListener {
             catch ( IOException e){
                 e.printStackTrace();
             }
+            File file1=new File(dir, "Update.txt");
+            try {
+                FileOutputStream fileOutputStream= new FileOutputStream(file1,true);
+                fileOutputStream.write(("magnetometer" + currtime + ".txt" + "\n").getBytes());
+                fileOutputStream.close();
+            }
+            catch (FileNotFoundException e){
+                e.printStackTrace();
+            }
+            catch ( IOException e){
+                e.printStackTrace();
+            }
             Toast.makeText(getApplicationContext(),"Size of file data is  " + FileData.size(),Toast.LENGTH_LONG).show();
         }
         else{
             Toast.makeText(getApplicationContext(),"SDcard Not Available",Toast.LENGTH_LONG).show();
         }
+        FileData= new Vector<String>();
         state=2;
     }
 
