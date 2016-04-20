@@ -47,9 +47,11 @@ public class update_Data extends Activity {
     JSONObject jsonObject = new JSONObject();
     String File_Data=new String();
     String File_Name=new String();
+    String Update_File_Name= "Update.txt";
     HashMap<String,String> Send_Data= new HashMap<String, String>();
-    private static String url_Send_Data = "http://172.16.114.76/BTP/Send_Data.php";
+    private static String url_Send_Data = "http://10.9.3.30/BTP/Send_Data.php";
     private static final String TAG_SUCCESS = "success";
+    private static final String TAG_UPDATE = "fileupdate";
 
 
     @Override
@@ -63,11 +65,58 @@ public class update_Data extends Activity {
 
             @Override
             public void onClick(View view) {
-                File_Name="rotation.txt";
-                readFromFile();
+                //File_Name="rotation.txt";
+                //readFromFile();
+                readFromUpdate();
                 new SendData().execute();
             }
         });
+    }
+    public void readFromUpdate(){
+        String sdCardState;
+        sdCardState= Environment.getExternalStorageState();
+        StringBuilder text = new StringBuilder();
+        File_Data=new String();
+        if(Environment.MEDIA_MOUNTED.equals(sdCardState)){
+            File root= Environment.getExternalStorageDirectory();
+            File dir= new File(root.getAbsolutePath()+"/IITGAPP");
+            if(!dir.exists()){
+                dir.mkdir();
+            }
+            File file= new File(dir,Update_File_Name);
+            try{
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    File_Name=line;
+                    Log.d(File_Name, TAG_UPDATE);
+                    readFromFile();
+                }
+                br.close();
+            }
+            catch (FileNotFoundException e){
+                e.printStackTrace();
+            }
+            catch ( IOException e){
+                e.printStackTrace();
+            }
+            Toast.makeText(getApplicationContext(),"Complete folder Read ",Toast.LENGTH_LONG).show();
+
+            File file1=new File(dir, Update_File_Name);
+            try {
+                FileOutputStream fileOutputStream= new FileOutputStream(file1);
+                fileOutputStream.close();
+            }
+            catch (FileNotFoundException e){
+                e.printStackTrace();
+            }
+            catch ( IOException e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"SDcard Not Available",Toast.LENGTH_LONG).show();
+        }
     }
     public void readFromFile(){
         String sdCardState;
@@ -81,6 +130,8 @@ public class update_Data extends Activity {
                 dir.mkdir();
             }
             File file= new File(dir,File_Name);
+            text.append(File_Name);
+            text.append('\n');
             try{
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 String line;
@@ -120,12 +171,6 @@ public class update_Data extends Activity {
 
 
         protected String doInBackground(String... args) {
-            try{
-                jsonObject.put("DATA" ,"ALL_data");
-            }
-            catch (JSONException e){
-                e.printStackTrace();
-            }
             Send_Data.put("DATA",File_Data);
             performPostCall(url_Send_Data, Send_Data);
             return null;
